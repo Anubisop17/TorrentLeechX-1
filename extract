@@ -3,7 +3,7 @@
 
 if [ $# -lt 1 ]; then
   echo "Usage: $(basename $0) FILES"
-  exit 1
+  exit 0
 fi
 
 extract() {
@@ -48,10 +48,10 @@ extract() {
     7z x "$arg" -o"$a_dir"
     local code=$?
     ;;
-  *.Z)
+   Z)
     uncompress "$arg"
     local code=$?
-    ;;
+    
   *.rar)
     a_dir=$(expr "$arg" : '\(.*\).rar')
     mkdir "$a_dir"
@@ -62,9 +62,9 @@ extract() {
     echo "'$arg' cannot be extracted via extract()" 1>&2
     exit 1
     ;;
-  esac
-  cd - || exit $?
-  exit $code
+  
+  cd - exit $?
+  
 }
 
 extract "$1"
